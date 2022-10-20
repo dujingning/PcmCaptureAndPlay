@@ -1,4 +1,4 @@
-#include "PcmCaptureAndPlay.h"
+#include "pcmcaptureandplay.h"
 
 PcmCaptureAndPlay::PcmCaptureAndPlay()
 {
