@@ -18,6 +18,21 @@ PcmCaptureAndPlay::~PcmCaptureAndPlay()
         delete out;
         out = nullptr;
     }
+    
+    
+    if (qIODevice) {
+        if (qIODevice->isOpen()) qIODevice->close();
+        delete qIODevice;    //qIODevice need to manual release, or will memory leak
+        qIODevice = nullptr;
+    }
+
+    if (audioInput) {
+        audioInput->stop();
+        delete audioInput;
+        audioInput = nullptr;
+    }
+    
+    
 }
 
 bool PcmCaptureAndPlay::initQtAudioForPlay()
