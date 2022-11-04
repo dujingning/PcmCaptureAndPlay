@@ -5,6 +5,21 @@ PcmCaptureAndPlay::PcmCaptureAndPlay()
 
 }
 
+PcmCaptureAndPlay::~PcmCaptureAndPlay()
+{
+    if (audioIO) {
+        if (audioIO->isOpen()) audioIO->close();
+        delete audioIO;    //qIODevice need to manual release, or will memory leak
+        audioIO = nullptr;
+    }
+
+    if (out) {
+        out->stop();
+        delete out;
+        out = nullptr;
+    }
+}
+
 bool PcmCaptureAndPlay::initQtAudioForPlay()
 {
     qAudioFormat.setSampleRate(16000);
@@ -44,6 +59,7 @@ bool PcmCaptureAndPlay::initQtAudioForCapture()
 
     audioInput = new QAudioInput(format, nullptr);
     qIODevice = audioInput->start(); // 这里可以直接写入到文件，咱不用直接就是播放 audioInput->start(file);
+    //qIODevice need to manual release, or will memory leak
 
     if (qIODevice) {
         qDebug() << "device available";
