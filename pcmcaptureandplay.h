@@ -24,6 +24,7 @@ class PcmCaptureAndPlay: public QThread
 
 public:
     PcmCaptureAndPlay();
+    ~PcmCaptureAndPlay();
 
 private: /*   QT audio play  */
     QAudioFormat qAudioFormat;
